@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/ToDoList/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="inner-header">
+        <ul class="nav-list">
+          <li><a href="/ToDoList/home.html">HOME</a></li>
+          <li>
+            <a href="/ToDoList/MyList.html"><span>MY</span>LIST</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <form id="todo-form">
+      <div class="container">
+        <h1>MY TO-DO LIST</h1>
+        <div class="input-group">
+          <label for="name-task">Task Name:</label>
+          <input type="text" id="name-task" placeholder="" />
+          <br />
+          <label for="description-task">Task Description:</label>
+          <input type="text" id="description-task" placeholder="" />
+          <br />
+          <label for="due-date-task">Due Date:</label>
+          <input type="date" id="due-date-task" />
+          <br />
+          <label for="condition-task">Condition:</label>
+          <select id="condition-task">
+            <option value="Not-Started">Not Started</option>
+            <option value="In-Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <br />
+          <div class="button-container">
+            <button type="submit">Add</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script src="/ToDoList/system.js"></script>
+  </body>
+</html>

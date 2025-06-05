@@ -1,0 +1,412 @@
+/* ======= RESPONSIVE CSS CODE WITH AUTO-WRAPPING TASKS ======= */
+/* Modified code to make tasks wrap to next line at screen boundaries */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+/* Added viewport-relative font size for better text scaling */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1c122e;
+    margin: 0;
+    padding: 0;
+    /* Added for better content handling on small screens */
+    overflow-x: hidden;
+}
+
+header {
+    width: 100%;
+    /* Changed from fixed height to min-height for better responsiveness */
+    min-height: 80px;
+    display: block;
+}
+
+.inner-header {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+    background-image: linear-gradient(to right, #2b1d44, #4e3b6d, #2b1d44);
+    position: relative;
+}
+
+.inner-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 300% 100%;
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to right, #2b1d44, #4e3b6d, #2b1d44);
+    z-index: -1;
+    animation: moveBackgroundRight 3s linear infinite;
+    filter: blur(50px);
+}
+
+@keyframes moveBackgroundRight {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: 100% 0%;
+    }
+}
+
+.inner-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 300% 100%;
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to left, #4e3b6d, #ffffff, #4e3b6d);
+    z-index: -1;
+    animation: moveBackgroundLeft 3s linear infinite;
+    filter: blur(50px);
+}
+
+@keyframes moveBackgroundLeft {
+    from {
+        background-position: 100% 0%;
+    }
+    to {
+        background-position: 0% 0%;
+    }
+}
+
+.nav-list a span {
+    color: #1c122e;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    /* Added flex-wrap for better mobile navigation */
+    flex-wrap: wrap;
+}
+
+.nav-list a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0px 20px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    /* Added minimum touch target size for better mobile usability */
+    min-height: 44px;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Added container for tasks with padding */
+.tasks-container {
+    width: 100%;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Modified tasks container to use auto-wrap */
+.tasks {
+    display: flex;
+    flex-direction: row;
+    /* Enable wrapping to next line */
+    flex-wrap: wrap;
+    /* Center items */
+    justify-content: center;
+    /* Space between rows */
+    row-gap: 30px;
+    /* Space between columns */
+    column-gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.task {
+    /* Fixed width for consistent layout */
+    width: 300px;
+    /* Allow growing slightly if needed */
+    flex-grow: 0;
+    /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Removed margin-top since we're using row-gap */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #2b1d44;
+    position: relative;
+    /* Changed from fixed font size to relative unit */
+    font-size: 1.5rem;
+    /* Added to maintain equal height */
+    height: fit-content;
+}
+
+.task::before, .task::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), transparent 70%, #ffffff, #ffffff, #ffffff, #ffffff);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;   
+    padding: 3px;
+    border-radius: 10px;
+    animation: 3s spin linear infinite;
+}
+
+.task::before {
+    filter: blur(10px);
+}
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
+}
+
+.task h3 {
+    color: #e3d1ee;
+    /* Changed from fixed font size to relative unit */
+    font-size: 1.875rem;
+    text-align: center;
+    /* Added word-wrap for long titles on small screens */
+    word-wrap: break-word;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.task p {
+    color: #e3d1ee;
+    /* Changed from fixed font size to relative unit */
+    font-size: 1.25rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* Added word-wrap for long text on small screens */
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.task select {
+    background-color: #c499dd;
+    color: #1c122e;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    /* Changed from fixed font size to relative unit */
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    /* Added width for better mobile experience */
+    width: 100%;
+    max-width: 250px;
+}
+
+.task button {
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #c499dd;
+    border: none;
+    border-radius: 10px;
+    color: #1c122e;
+    /* Changed from fixed font size to relative unit */
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    /* Added max-width for better appearance on larger screens */
+    max-width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    overflow: hidden;
+    /* Added minimum touch target size for better mobile usability */
+    min-height: 44px;
+}
+
+/* تأثير الهوفر */
+.task button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(196, 153, 221, 0.3);
+    background-color: #d5b3e6;
+}
+
+/* تأثير النقر */
+.task button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(196, 153, 221, 0.2);
+    background-color: #b384cc;
+}
+
+/* تأثير الموجة عند النقر */
+.task button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1) translate(-50%, -50%);
+    transform-origin: 0% 0%;
+}
+
+.task button:active::after {
+    animation: ripple 0.6s ease-out;
+    opacity: 1;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0) translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(20) translate(-50%, -50%);
+        opacity: 0;
+    }
+}
+
+/* تأثير التوهج */
+.task button::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    top: 0;
+    left: -100%;
+    transition: 0.5s;
+}
+
+.task button:hover::before {
+    left: 100%;
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* تأثير النبض */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(196, 153, 221, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(196, 153, 221, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(196, 153, 221, 0);
+    }
+}
+
+.task button:hover {
+    animation: pulse 1.5s infinite;
+}
+
+/* Message for no tasks */
+.no-tasks {
+    color: #e3d1ee;
+    font-size: 1.5rem;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+}
+
+/* ======= ADDED MEDIA QUERIES FOR RESPONSIVENESS ======= */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .task {
+        width: 280px;
+        padding: 15px;
+    }
+    
+    .nav-list a {
+        padding: 0 15px;
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+    
+    header {
+        min-height: 60px;
+    }
+    
+    .task {
+        width: 100%;
+        max-width: 300px;
+        padding: 12px;
+    }
+    
+    .nav-list {
+        justify-content: space-around;
+    }
+    
+    .nav-list a {
+        padding: 0 10px;
+        font-size: 0.9rem;
+    }
+    
+    .task select, 
+    .task button {
+        max-width: 100%;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 320px) {
+    html {
+        font-size: 10px;
+    }
+    
+    .task {
+        padding: 10px;
+    }
+}
